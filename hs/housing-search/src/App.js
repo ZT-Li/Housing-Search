@@ -1,10 +1,9 @@
 import './App.css';
+import { SearchBar } from './Components/SearchBar/SearchBar';
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <SearchBar />
   );
 }
 

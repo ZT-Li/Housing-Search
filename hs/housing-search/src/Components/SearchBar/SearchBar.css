@@ -1,0 +1,12 @@
+.search-bar {
+  border-radius: 15px;
+  border-top-color: coral;
+  border-bottom-color: darksalmon;
+}
+
+.search-btn {
+  background-color: coral;
+  border-radius: 15px;
+  margin: 10px;
+  color: rgb(105, 32, 3);
+}
