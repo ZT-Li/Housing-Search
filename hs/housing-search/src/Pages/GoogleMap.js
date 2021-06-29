@@ -1,6 +1,6 @@
 import { Map, GoogleApiWrapper } from 'google-maps-react';
-import { useState, useEffect } from 'react';
-import Geocode from 'react-geocode';
+import { useState } from 'react';
+import GetCoord from '../Components/GetCoord/GetCoord';
 
 //show the map
 function GoogleMapPage(props) {
@@ -10,21 +10,6 @@ function GoogleMapPage(props) {
 
     const MapStyle = { width: '400px', height: '400px' }
 
-    //convert address to geocode
-    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
-    Geocode.setLanguage("en");
-    Geocode.setRegion("us");
-    function GetCoord(Adrs) {
-        Geocode.fromAddress(Adrs).then(
-            (response) => {
-                SetCoord(response.results[0].geometry.location);
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
-    }
-
     function handleChange(e) {
         e.preventDefault();
         SetAddress(e.target.value);
@@ -32,7 +17,9 @@ function GoogleMapPage(props) {
 
     function Submit(e) {
         e.preventDefault();
-        GetCoord(address);
+        GetCoord({ address: address }).then(res => {
+            SetCoord(res);
+        })
         SetZoom(14);
     }
 
