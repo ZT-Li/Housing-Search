@@ -5,8 +5,8 @@ Geocode.setLanguage("en");
 Geocode.setRegion("us");
 
 let coordinate = null;
-async function GetCoord(props) {
-    await Geocode.fromAddress(props.address).then(
+async function GetCoord(adrs) {
+    await Geocode.fromAddress(adrs).then(
         (response) => {
             coordinate = response.results[0].geometry.location;
         },
