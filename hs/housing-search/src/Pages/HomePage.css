@@ -66,7 +66,7 @@ body {
 
 .search-btn {
   background-color: rgb(196, 181, 253);
-  background-image: url("../Components/SearchBar/icons/search-icon.png");
+  background-image: url("./SearchIcon/search-icon.png");
   background-size: 30px 30px;
   background-position: center;
   background-repeat: no-repeat;

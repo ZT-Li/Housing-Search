@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 import styles from './HomePage.css'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-import { GetCoord, Radar, DataCards, GetData, RatingCard } from '../Components/index';
-import { a, animated, useSpring } from 'react-spring';
-import Scrollbars from 'react-custom-scrollbars';
+import { GetCoord, Radar, DataCards, GetData, RatingCard, GetState, GetCrimeRate } from '../Components/index';
 
 
 function HomePage(props) {
@@ -17,6 +15,7 @@ function HomePage(props) {
     const [p, SetP] = useState();
     const [g, SetG] = useState();
     const [h, SetH] = useState();
+    const [cr, SetCR] = useState();
 
     function handleChange(e) {
         e.preventDefault();
@@ -41,7 +40,9 @@ function HomePage(props) {
             SetG(null);
             SetH(null);
             await GetCoord(UserInput.input).then(res => {
+                //set the map properties
                 SetConfig({ ...MapConfig, coordinates: res, zoom: 15 })
+                //get the individual places data
                 GetData(res.lat, res.lng, UserInput.radius, UserInput.type).then(res => { SetData(res); console.log(res.map(r => r.rating)) })
             }).catch(err => console.log(err));
         }
@@ -50,7 +51,10 @@ function HomePage(props) {
         if (UserInput.input && (UserInput.type == 'default: All')) {
             SetData(null);
             await GetCoord(UserInput.input).then(res => {
+                //set the map properties
                 SetConfig({ ...MapConfig, coordinates: res, zoom: 15 })
+                //get the state shortname
+                GetState(res).then(state => GetCrimeRate(state).then(crime => SetCR(crime)))
                 //restaurant
                 GetData(res.lat, res.lng, UserInput.radius, 'restaurant').then(res => SetR(res))
                 //school
@@ -98,20 +102,19 @@ function HomePage(props) {
         let sum = 0;
         for (let a in arr) {
             sum += arr[a];
-            console.log('a: ' + a)
-            console.log('sum: ' + sum)
         }
         return sum / arr.length
     }
 
     //return an object of all rating
-    const getRating = (h, s, r, p, g) => {
+    const getRating = (h, s, r, p, g, cr) => {
         const hospital_rating = avg(filterRating(h))
         const school_rating = avg(filterRating(s))
         const restaurant_rating = avg(filterRating(r))
         const park_rating = avg(filterRating(p))
         const gym_rating = avg(filterRating(g))
-        return <RatingCard hospital_rating={hospital_rating} school_rating={school_rating} restaurant_rating={restaurant_rating} park_rating={park_rating} gym_rating={gym_rating}></RatingCard>
+
+        return <RatingCard hospital_rating={hospital_rating} school_rating={school_rating} restaurant_rating={restaurant_rating} park_rating={park_rating} gym_rating={gym_rating} crime_rate={cr}></RatingCard>
     }
 
     return (
@@ -194,7 +197,7 @@ function HomePage(props) {
                         <div className='data-table'>
                             {g && result(g)}
                         </div>
-                        <div>{getRating(h, s, r, p, g)}</div>
+                        <div>{getRating(h, s, r, p, g, cr)}</div>
                     </>
                 }
 

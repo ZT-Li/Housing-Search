@@ -1,6 +1,5 @@
-import { Card, CardContent, Typography, CardMedia, IconButton } from "@material-ui/core";
+import { Card, CardContent, Typography, CardMedia } from "@material-ui/core";
 import { useState } from "react";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import styles from './DataCards.css'
 
 
@@ -13,12 +12,6 @@ const DataCards = ({ icon = 'img-url', name = 'business name', vicinity = 'addre
     const [expend, SetExpend] = useState(null);
 
     let url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=250&photoreference=${photo_reference}&key=${API_KEY}`
-
-    function handleExpand(e) {
-        e.preventDefault();
-        SetExpend(!expend);
-    }
-
 
     return (
         <Card className='Card'>
