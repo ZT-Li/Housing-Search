@@ -14,15 +14,15 @@
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  height: 50px;
-  width: 50px;
+  height: 70px;
+  width: 70px;
   border-radius: 50%;
   overflow: hidden;
   background: conic-gradient(from 90deg at 50% 50%, #2e4223 0% 65%, #9ac047);
   background: repeating-radial-gradient(
       transparent,
-      transparent 5px,
-      #287a33 13px
+      transparent 7px,
+      #287a33 17px
     ),
     linear-gradient(
         transparent 49.75%,

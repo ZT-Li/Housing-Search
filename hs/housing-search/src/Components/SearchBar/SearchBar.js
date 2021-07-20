@@ -7,7 +7,7 @@ export function SearchBar(props) {
         input = e.target.value;
     }
 
-    function FetchUserInput(e) {
+    async function FetchUserInput(e) {
         e.preventDefault();
     }
     return (

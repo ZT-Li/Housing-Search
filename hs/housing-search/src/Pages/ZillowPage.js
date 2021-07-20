@@ -2,7 +2,6 @@ import axios from "axios";
 import { SearchBar } from "../Components/SearchBar/SearchBar";
 
 
-
 function ZillowPage() {
     return (
         <>
